@@ -109,6 +109,10 @@ body {
 
 /* Responsive */
 @media (max-width: 768px) {
+  body {
+    font-size: 14px; /* Reducir el tamaño de la fuente para móviles */
+  }
+
   .section-title {
     font-size: 2rem;
   }
@@ -116,6 +120,11 @@ body {
   .section-subtitle {
     font-size: 1rem;
     margin-bottom: 2rem;
+  }
+
+  .btn {
+    padding: 0.9rem 1.2rem; /* Botones más pequeños */
+    font-size: 0.9rem;
   }
 }
 
@@ -223,7 +232,7 @@ body {
     position: fixed;
     top: 0;
     right: -100%;
-    width: 70%;
+    width: 80%;
     height: 100vh;
     background-color: var(--light-color);
     display: flex;
@@ -248,7 +257,7 @@ body {
   }
 
   .navbar-menu ul li {
-    margin: 1rem 0;
+    margin: 0.8rem 0;
   }
 
   .menu-toggle {
@@ -266,6 +275,9 @@ body {
 
   .menu-toggle.open span:nth-child(3) {
     transform: translateY(-9px) rotate(-45deg);
+  }
+  .navbar-logo {
+    font-size: 1.2rem; /* Tamaño más pequeño para el logo */
   }
 }
 
@@ -392,8 +404,13 @@ body {
 }
 
 @media (max-width: 768px) {
+  .hero {
+    height: max-content;
+    padding: 4rem 1rem; /* Menos padding */
+  }
+
   .hero-title {
-    font-size: 2.5rem;
+    font-size: 2.8rem;
   }
 
   .hero-subtitle {
@@ -534,9 +551,29 @@ body {
 }
 
 @media (max-width: 768px) {
+  projects {
+    padding: 4rem 1rem; /* Menos padding */
+  }
+
   .projects-grid {
     grid-template-columns: 1fr;
     max-width: 500px;
+  }
+  .project-card {
+    margin-bottom: 1rem; /* Espacio entre tarjetas */
+  }
+
+  .project-image {
+    height: 200px; /* Altura más pequeña para las imágenes */
+  }
+
+  .project-links {
+    padding: 0.5rem; /* Menos padding en los enlaces */
+  }
+
+  .project-link {
+    padding: 0.4rem 0.8rem; /* Botones más pequeños */
+    font-size: 0.8rem;
   }
 }
 
@@ -624,6 +661,13 @@ body {
 @media (max-width: 768px) {
   .skills {
     padding: 4rem 1rem;
+  }
+  .skill-item {
+    margin-bottom: 1.2rem; /* Menos espacio entre habilidades */
+  }
+
+  .skill-bar {
+    height: 10px; /* Barras más delgadas */
   }
 }
 
@@ -796,8 +840,12 @@ body {
 }
 
 @media (max-width: 768px) {
+  .contact {
+    padding: 4rem 1rem; /* Menos padding */
+  }
   .contact-container {
     grid-template-columns: 1fr;
+    gap: 1rem;
   }
 
   .contact-info {
@@ -806,15 +854,36 @@ body {
 
   .contact-method {
     flex-direction: column;
+    align-items: center;
     text-align: center;
   }
 
   .contact-icon {
     margin-right: 0;
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
   }
 
   .social-links {
     justify-content: center;
+  }
+
+  .contact-form-container {
+    padding: 1rem; /* Menos padding */
+  }
+
+  .form-group input,
+  .form-group textarea {
+    padding: 0.6rem; /* Menos padding en inputs */
+  }
+
+  .submit-btn {
+    padding: 0.8rem; /* Botón más pequeño */
+  }
+}
+
+@media (max-width: 768px) {
+  .footer {
+    padding: 1rem; /* Menos padding */
+    font-size: 0.9rem; /* Tamaño de fuente más pequeño */
   }
 }
