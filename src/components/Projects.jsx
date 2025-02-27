@@ -5,6 +5,7 @@ import img2 from '../assets/img-2.png';
 import img3 from '../assets/img-3.png';
 import img4 from '../assets/img-4.png';
 import img5 from '../assets/img-5.png';
+import img6 from '../assets/img-6.png';
 
 const Projects = () => {
   const [activeProject, setActiveProject] = useState(null);
@@ -59,6 +60,16 @@ const Projects = () => {
       image: img5,
       github: 'https://github.com/DavidSerranoReyes/fadeps',
       demo: 'https://fadeps.vercel.app/',
+    },
+    {
+      id: 6,
+      title: 'TrekBag',
+      description:
+        'A web application that helps travelers organize, store, and check off all essential items for their upcoming trips.',
+      techs: ['React', 'CSS', 'HTML', 'UX/UI'],
+      image: img6,
+      github: 'https://github.com/DavidSerranoReyes/TrekBag',
+      demo: 'https://trek-bag-inky.vercel.app/',
     },
   ];
 
