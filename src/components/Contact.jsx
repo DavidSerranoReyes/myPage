@@ -1,7 +1,12 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import '../styles/App.css';
+import { useLanguage } from '../contexts/LanguageContext';
+import { translations } from '../translations';
+import emailjs from '@emailjs/browser';
 
 const Contact = () => {
+  const { language } = useLanguage();
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -14,40 +19,72 @@ const Contact = () => {
     error: null,
   });
 
+  // Inicialización de EmailJS
+  useEffect(() => {
+    // Reemplaza con tu User ID de EmailJS
+    emailjs.init('wlPEwZl4t2rCDch6m');
+  }, []);
+
+  // Obtenemos las traducciones correspondientes a la sección de contacto
+  const t = translations[language]?.contact || translations.es.contact;
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setFormStatus({ submitting: true, submitted: false, error: null });
 
-    // Simulación de envío de formulario
-    setTimeout(() => {
+    try {
+      // Enviar el correo electrónico usando EmailJS
+      const result = await emailjs.send(
+        'service_cchy9wt', // Reemplaza con tu Service ID de EmailJS
+        'template_o613h2v', // Reemplaza con tu Template ID de EmailJS
+        {
+          from_name: formData.name,
+          from_email: formData.email,
+          message: formData.message,
+          reply_to: formData.email,
+          to_name: 'David Serrano', // Tu nombre
+          to_email: 'david-serrano@outlook.com', // Tu correo electrónico
+          subject: `Nuevo mensaje de contacto de ${formData.name}`,
+        }
+      );
+
+      if (result.status === 200) {
+        setFormStatus({
+          submitting: false,
+          submitted: true,
+          error: null,
+        });
+        setFormData({ name: '', email: '', message: '' });
+      } else {
+        throw new Error('Error al enviar el mensaje');
+      }
+    } catch (error) {
+      console.error('Error al enviar el formulario:', error);
       setFormStatus({
         submitting: false,
-        submitted: true,
-        error: null,
+        submitted: false,
+        error: error.message || 'Error al enviar el mensaje',
       });
-      setFormData({ name: '', email: '', message: '' });
-    }, 1500);
+    }
   };
 
   return (
     <section id="contacto" className="contact">
       <div className="contact-container">
         <div className="contact-info">
-          <h2 className="section-title">Contáctame</h2>
-          <p className="section-subtitle">
-            ¿Tienes un proyecto en mente? ¡Hablemos sobre él!
-          </p>
+          <h2 className="section-title">{t.title}</h2>
+          <p className="section-subtitle">{t.subtitle}</p>
 
           <div className="contact-methods">
             <div className="contact-method">
               <div className="contact-icon">📧</div>
               <div className="contact-text">
-                <h3>Email</h3>
+                <h3>{t.email}</h3>
                 <p>david-serrano@outlook.com</p>
               </div>
             </div>
@@ -55,7 +92,7 @@ const Contact = () => {
             <div className="contact-method">
               <div className="contact-icon">📱</div>
               <div className="contact-text">
-                <h3>Teléfono</h3>
+                <h3>{t.phone}</h3>
                 <p>+593 9 84096797</p>
               </div>
             </div>
@@ -63,7 +100,7 @@ const Contact = () => {
             <div className="contact-method">
               <div className="contact-icon">🌎</div>
               <div className="contact-text">
-                <h3>Ubicación</h3>
+                <h3>{t.location}</h3>
                 <p>Quito, Ecuador</p>
               </div>
             </div>
@@ -100,7 +137,7 @@ const Contact = () => {
         <div className="contact-form-container">
           <form className="contact-form" onSubmit={handleSubmit}>
             <div className="form-group">
-              <label htmlFor="name">Nombre</label>
+              <label htmlFor="name">{t.nameLabel}</label>
               <input
                 type="text"
                 id="name"
@@ -108,12 +145,12 @@ const Contact = () => {
                 value={formData.name}
                 onChange={handleChange}
                 required
-                placeholder="Tu nombre"
+                placeholder={t.namePlaceholder}
               />
             </div>
 
             <div className="form-group">
-              <label htmlFor="email">Email</label>
+              <label htmlFor="email">{t.emailLabel}</label>
               <input
                 type="email"
                 id="email"
@@ -121,19 +158,19 @@ const Contact = () => {
                 value={formData.email}
                 onChange={handleChange}
                 required
-                placeholder="tu.email@ejemplo.com"
+                placeholder={t.emailPlaceholder}
               />
             </div>
 
             <div className="form-group">
-              <label htmlFor="message">Mensaje</label>
+              <label htmlFor="message">{t.messageLabel}</label>
               <textarea
                 id="message"
                 name="message"
                 value={formData.message}
                 onChange={handleChange}
                 required
-                placeholder="Cuéntame sobre tu proyecto..."
+                placeholder={t.messagePlaceholder}
                 rows="5"
               ></textarea>
             </div>
@@ -144,23 +181,18 @@ const Contact = () => {
               disabled={formStatus.submitting || formStatus.submitted}
             >
               {formStatus.submitting
-                ? 'Enviando...'
+                ? t.sending
                 : formStatus.submitted
-                  ? '¡Enviado!'
-                  : 'Enviar Mensaje'}
+                  ? t.sent
+                  : t.sendButton}
             </button>
 
             {formStatus.submitted && (
-              <div className="form-success">
-                ¡Gracias por tu mensaje! Te responderé pronto.
-              </div>
+              <div className="form-success">{t.successMessage}</div>
             )}
 
             {formStatus.error && (
-              <div className="form-error">
-                Hubo un error al enviar tu mensaje. Por favor, intenta
-                nuevamente.
-              </div>
+              <div className="form-error">{t.errorMessage}</div>
             )}
           </form>
         </div>

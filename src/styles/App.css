@@ -887,3 +887,25 @@ body {
     font-size: 0.9rem; /* Tamaño de fuente más pequeño */
   }
 }
+
+.language-toggle {
+  background: none;
+  border: 1px solid var(--text-color, #333);
+  color: var(--text-color, #333);
+  font-size: 14px;
+  font-weight: 600;
+  padding: 4px 8px;
+  margin-right: 10px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+.language-toggle:hover {
+  opacity: 0.8;
+}
+
+.dark-mode .language-toggle {
+  border-color: var(--text-color, #fff);
+  color: var(--text-color, #fff);
+}

@@ -1,19 +1,86 @@
 import { useEffect, useRef } from 'react';
 import '../styles/App.css';
+import { useLanguage } from '../contexts/LanguageContext';
+import { translations } from '../translations';
 
 const Skills = () => {
   const canvasRef = useRef(null);
+  const { language } = useLanguage();
+  const t = translations[language];
 
-  const skills = [
-    { name: 'HTML/CSS', level: 90, category: 'frontend' },
-    { name: 'JavaScript', level: 85, category: 'frontend' },
-    { name: 'React', level: 80, category: 'frontend' },
-    { name: 'Typescript', level: 70, category: 'frontend' },
-    { name: 'Next.js', level: 65, category: 'backend' },
-    { name: 'Git', level: 80, category: 'tools' },
-    { name: 'UI/UX', level: 75, category: 'design' },
-    { name: 'Responsive Design', level: 85, category: 'design' },
+  // Lista de habilidades con soporte multilingüe
+  const skillsData = [
+    {
+      level: 90,
+      category: 'frontend',
+      translations: {
+        es: { name: 'HTML/CSS' },
+        en: { name: 'HTML/CSS' },
+      },
+    },
+    {
+      level: 85,
+      category: 'frontend',
+      translations: {
+        es: { name: 'JavaScript' },
+        en: { name: 'JavaScript' },
+      },
+    },
+    {
+      level: 80,
+      category: 'frontend',
+      translations: {
+        es: { name: 'React' },
+        en: { name: 'React' },
+      },
+    },
+    {
+      level: 70,
+      category: 'frontend',
+      translations: {
+        es: { name: 'Typescript' },
+        en: { name: 'Typescript' },
+      },
+    },
+    {
+      level: 65,
+      category: 'backend',
+      translations: {
+        es: { name: 'Next.js' },
+        en: { name: 'Next.js' },
+      },
+    },
+    {
+      level: 80,
+      category: 'tools',
+      translations: {
+        es: { name: 'Git' },
+        en: { name: 'Git' },
+      },
+    },
+    {
+      level: 75,
+      category: 'design',
+      translations: {
+        es: { name: 'UI/UX' },
+        en: { name: 'UI/UX' },
+      },
+    },
+    {
+      level: 85,
+      category: 'design',
+      translations: {
+        es: { name: 'Diseño Responsivo' },
+        en: { name: 'Responsive Design' },
+      },
+    },
   ];
+
+  // Mapea las habilidades según el idioma actual
+  const skills = skillsData.map((skill) => ({
+    ...skill,
+    name: skill.translations[language].name,
+  }));
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -98,10 +165,8 @@ const Skills = () => {
       <canvas ref={canvasRef} className="skills-canvas"></canvas>
 
       <div className="skills-content">
-        <h2 className="section-title">Mis Habilidades</h2>
-        <p className="section-subtitle">
-          Tecnologías y herramientas con las que trabajo
-        </p>
+        <h2 className="section-title">{t.skills.title}</h2>
+        <p className="section-subtitle">{t.skills.subtitle}</p>
 
         <div className="skills-bars">
           {skills.map((skill, index) => (

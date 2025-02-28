@@ -5,6 +5,7 @@ import Projects from './components/Projects';
 import Skills from './components/Skills';
 import Contact from './components/Contact';
 import './styles/App.css';
+import { LanguageProvider } from './contexts/LanguageContext';
 
 const App = () => {
   const [darkMode, setDarkMode] = useState(false);
@@ -17,22 +18,25 @@ const App = () => {
   }, []);
 
   return (
-    <div className={`app ${darkMode ? 'dark-mode' : 'light-mode'}`}>
-      <Navbar
-        darkMode={darkMode}
-        toggleDarkMode={() => setDarkMode(!darkMode)}
-        scrollY={scrollY}
-      />
-      <Hero scrollY={scrollY} />
-      <Projects />
-      <Skills />
-      <Contact />
-      <footer className="footer">
-        <p>
-          © {new Date().getFullYear()} davidSerranoReyes - Developer Portfolio
-        </p>
-      </footer>
-    </div>
+    <LanguageProvider>
+      <div className={`app ${darkMode ? 'dark-mode' : 'light-mode'}`}>
+        <Navbar
+          darkMode={darkMode}
+          toggleDarkMode={() => setDarkMode(!darkMode)}
+          scrollY={scrollY}
+        />
+        <Hero scrollY={scrollY} />
+        <Projects />
+        <Skills />
+        <Contact />
+        <footer className="footer">
+          <p>
+            © {new Date().getFullYear()} davidSerranoReyes - Developer
+            Portfolio
+          </p>
+        </footer>
+      </div>
+    </LanguageProvider>
   );
 };
 

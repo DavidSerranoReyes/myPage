@@ -1,10 +1,21 @@
 import { useState } from 'react';
 import '../styles/App.css';
+import { useLanguage } from '../contexts/LanguageContext';
+import { translations } from '../translations';
 
 const Navbar = ({ darkMode, toggleDarkMode, scrollY }) => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const { language, toggleLanguage } = useLanguage();
 
-  const navItems = ['Inicio', 'Proyectos', 'Habilidades', 'Contacto'];
+  // Accede a las traducciones según el idioma actual
+  const t = translations[language];
+
+  const navItems = [
+    { id: 'inicio', text: t.inicio },
+    { id: 'proyectos', text: t.proyectos },
+    { id: 'habilidades', text: t.habilidades },
+    { id: 'contacto', text: t.contacto },
+  ];
 
   return (
     <nav className={`navbar ${scrollY > 50 ? 'navbar-scrolled' : ''}`}>
@@ -16,11 +27,8 @@ const Navbar = ({ darkMode, toggleDarkMode, scrollY }) => {
         <ul>
           {navItems.map((item, index) => (
             <li key={index}>
-              <a
-                href={`#${item.toLowerCase()}`}
-                onClick={() => setMenuOpen(false)}
-              >
-                {item}
+              <a href={`#${item.id}`} onClick={() => setMenuOpen(false)}>
+                {item.text}
               </a>
             </li>
           ))}
@@ -28,12 +36,19 @@ const Navbar = ({ darkMode, toggleDarkMode, scrollY }) => {
       </div>
 
       <div className="navbar-controls">
+        {/* Botón simple para alternar idioma */}
+        <button
+          className="language-toggle"
+          onClick={toggleLanguage}
+          aria-label={t.cambiarIdioma}
+        >
+          {language === 'es' ? 'EN' : 'ES'}
+        </button>
+
         <button
           className="theme-toggle"
           onClick={toggleDarkMode}
-          aria-label={
-            darkMode ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro'
-          }
+          aria-label={darkMode ? t.cambiarModoClaro : t.cambiarModoOscuro}
         >
           {darkMode ? '☀️' : '🌙'}
         </button>
@@ -41,7 +56,7 @@ const Navbar = ({ darkMode, toggleDarkMode, scrollY }) => {
         <button
           className="menu-toggle"
           onClick={() => setMenuOpen(!menuOpen)}
-          aria-label={menuOpen ? 'Cerrar menú' : 'Abrir menú'}
+          aria-label={menuOpen ? t.cerrarMenu : t.abrirMenu}
         >
           <span></span>
           <span></span>
