@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import '../styles/App.css';
 import img1 from '../assets/img-1.png';
 import img2 from '../assets/img-2.png';
@@ -11,8 +11,26 @@ import { translations } from '../translations';
 
 const Projects = () => {
   const [activeProject, setActiveProject] = useState(null);
+  const [isMobile, setIsMobile] = useState(false);
   const { language } = useLanguage();
   const t = translations[language];
+
+  // Detectar si es dispositivo móvil
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    // Comprobar al cargar
+    checkMobile();
+
+    // Comprobar al cambiar tamaño de ventana
+    window.addEventListener('resize', checkMobile);
+
+    return () => {
+      window.removeEventListener('resize', checkMobile);
+    };
+  }, []);
 
   // Los proyectos ahora tienen contenido en ambos idiomas
   const projectsData = [
@@ -139,18 +157,40 @@ const Projects = () => {
     description: project.translations[language].description,
   }));
 
+  // Manejar el clic en la tarjeta del proyecto (para móviles)
+  const handleProjectClick = (projectId) => {
+    if (isMobile) {
+      if (activeProject === projectId) {
+        // Si ya está activo, lo desactivamos
+        setActiveProject(null);
+      } else {
+        // Si no está activo, lo activamos
+        setActiveProject(projectId);
+      }
+    }
+  };
+
   return (
     <section id="proyectos" className="projects">
       <h2 className="section-title">{t.projects.title}</h2>
       <p className="section-subtitle">{t.projects.subtitle}</p>
+
+      {isMobile && (
+        <p className="mobile-hint">
+          {language === 'es'
+            ? 'Toca en un proyecto para ver opciones'
+            : 'Tap on a project to see options'}
+        </p>
+      )}
 
       <div className="projects-grid">
         {projects.map((project) => (
           <div
             key={project.id}
             className={`project-card ${activeProject === project.id ? 'active' : ''}`}
-            onMouseEnter={() => setActiveProject(project.id)}
-            onMouseLeave={() => setActiveProject(null)}
+            onMouseEnter={() => !isMobile && setActiveProject(project.id)}
+            onMouseLeave={() => !isMobile && setActiveProject(null)}
+            onClick={() => handleProjectClick(project.id)}
           >
             <div className="project-image">
               <img src={project.image} alt={project.title} />
@@ -160,6 +200,7 @@ const Projects = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="project-link"
+                  onClick={(e) => isMobile && e.stopPropagation()}
                 >
                   {t.projects.codeBtn}
                 </a>
@@ -168,6 +209,7 @@ const Projects = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="project-link"
+                  onClick={(e) => isMobile && e.stopPropagation()}
                 >
                   {t.projects.demoBtn}
                 </a>
@@ -185,6 +227,12 @@ const Projects = () => {
                 ))}
               </div>
             </div>
+
+            {isMobile && activeProject === project.id && (
+              <div className="mobile-indicator">
+                <span className="close-icon">&times;</span>
+              </div>
+            )}
           </div>
         ))}
       </div>

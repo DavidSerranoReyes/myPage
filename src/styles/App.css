@@ -909,3 +909,16 @@ body {
   border-color: var(--text-color, #fff);
   color: var(--text-color, #fff);
 }
+
+.mobile-hint {
+  display: none;
+  text-align: center;
+  margin-bottom: 20px;
+  font-style: italic;
+  color: #666;
+}
+
+@media (max-width: 768px) {
+  .mobile-hint {
+    display: block;
+  }
