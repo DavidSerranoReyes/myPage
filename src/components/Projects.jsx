@@ -94,7 +94,7 @@ const Projects = () => {
     {
       id: 4,
       image: img4,
-      github: '',
+      github: 'https://github.com/DavidSerranoReyes/web-carla',
       demo: 'https://www.carlarreasanchez.com',
       techs: ['Astro', 'React', 'JavaScript', 'CSS', 'Tailwind CSS'],
       translations: {
