@@ -96,7 +96,7 @@ const Projects = () => {
       image: img4,
       github: '',
       demo: 'https://www.carlarreasanchez.com',
-      techs: ['React', 'JavaScript', 'CSS', 'HTML'],
+      techs: ['Astro', 'React', 'JavaScript', 'CSS', 'Tailwind CSS'],
       translations: {
         es: {
           title: 'Carla Larrea Sánchez',
