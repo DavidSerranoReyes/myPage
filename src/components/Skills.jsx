@@ -8,79 +8,56 @@ const Skills = () => {
   const { language } = useLanguage();
   const t = translations[language];
 
-  // Lista de habilidades con soporte multilingüe
-  const skillsData = [
-    {
-      level: 90,
-      category: 'frontend',
-      translations: {
-        es: { name: 'HTML/CSS' },
-        en: { name: 'HTML/CSS' },
-      },
-    },
-    {
-      level: 85,
-      category: 'frontend',
-      translations: {
-        es: { name: 'JavaScript' },
-        en: { name: 'JavaScript' },
-      },
-    },
-    {
-      level: 80,
-      category: 'frontend',
-      translations: {
-        es: { name: 'React' },
-        en: { name: 'React' },
-      },
-    },
-    {
-      level: 70,
-      category: 'frontend',
-      translations: {
-        es: { name: 'Typescript' },
-        en: { name: 'Typescript' },
-      },
-    },
-    {
-      level: 65,
-      category: 'backend',
-      translations: {
-        es: { name: 'Next.js' },
-        en: { name: 'Next.js' },
-      },
-    },
-    {
-      level: 80,
-      category: 'tools',
-      translations: {
-        es: { name: 'Git' },
-        en: { name: 'Git' },
-      },
-    },
-    {
-      level: 75,
-      category: 'design',
-      translations: {
-        es: { name: 'UI/UX' },
-        en: { name: 'UI/UX' },
-      },
-    },
-    {
-      level: 85,
-      category: 'design',
-      translations: {
-        es: { name: 'Diseño Responsivo' },
-        en: { name: 'Responsive Design' },
-      },
-    },
-  ];
+  // Niveles de habilidad
+  const levels = {
+    expert: { es: 'Experto', en: 'Expert' },
+    advanced: { es: 'Avanzado', en: 'Advanced' },
+    intermediate: { es: 'Intermedio', en: 'Intermediate' },
+  };
 
-  // Mapea las habilidades según el idioma actual
-  const skills = skillsData.map((skill) => ({
-    ...skill,
-    name: skill.translations[language].name,
-  }));
+  // Lista de habilidades agrupadas por categoría
+  const skillsData = {
+    frontend: {
+      title: { es: 'Frontend', en: 'Frontend' },
+      skills: [
+        { name: 'HTML/CSS', level: 'expert' },
+        { name: 'JavaScript', level: 'advanced' },
+        { name: 'React', level: 'advanced' },
+        { name: 'React Native', level: 'intermediate' },
+        { name: 'TypeScript', level: 'intermediate' },
+        { name: 'Next.js', level: 'intermediate' },
+        { name: 'Astro', level: 'intermediate' },
+      ],
+    },
+    design: {
+      title: { es: 'Diseño', en: 'Design' },
+      skills: [
+        {
+          name: { es: 'Diseño Responsivo', en: 'Responsive Design' },
+          level: 'advanced',
+        },
+        { name: 'UI/UX', level: 'intermediate' },
+        { name: 'Tailwind CSS', level: 'advanced' },
+      ],
+    },
+    tools: {
+      title: { es: 'Herramientas', en: 'Tools' },
+      skills: [
+        { name: 'Git', level: 'advanced' },
+        { name: 'VS Code', level: 'expert' },
+        { name: 'Docker', level: 'intermediate' },
+        { name: 'Python', level: 'intermediate' },
+        { name: 'Figma', level: 'intermediate' },
+      ],
+    },
+  };
+
+  const getSkillName = (skill) => {
+    if (typeof skill.name === 'object') {
+      return skill.name[language];
+    }
+    return skill.name;
+  };
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -168,20 +145,19 @@ const Skills = () => {
         <h2 className="section-title">{t.skills.title}</h2>
         <p className="section-subtitle">{t.skills.subtitle}</p>
 
-        <div className="skills-bars">
-          {skills.map((skill, index) => (
-            <div key={index} className="skill-item">
-              <div className="skill-info">
-                <span className="skill-name">{skill.name}</span>
-                <span className="skill-percentage">{skill.level}%</span>
-              </div>
-              <div className="skill-bar">
-                <div
-                  className={`skill-progress ${skill.category}`}
-                  style={{ width: `${skill.level}%` }}
-                  data-aos="width"
-                  data-aos-delay={index * 100}
-                ></div>
+        <div className="skills-categories">
+          {Object.entries(skillsData).map(([key, category]) => (
+            <div key={key} className="skill-category">
+              <h3 className="category-title">{category.title[language]}</h3>
+              <div className="skills-tags">
+                {category.skills.map((skill, index) => (
+                  <div key={index} className={`skill-tag ${skill.level}`}>
+                    <span className="skill-name">{getSkillName(skill)}</span>
+                    <span className="skill-level">
+                      {levels[skill.level][language]}
+                    </span>
+                  </div>
+                ))}
               </div>
             </div>
           ))}
