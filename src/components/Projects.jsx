@@ -94,19 +94,19 @@ const Projects = () => {
     {
       id: 4,
       image: img4,
-      github: 'https://github.com/DavidSerranoReyes/FancyCounter',
-      demo: 'https://fancy-counter-topaz.vercel.app/',
+      github: '',
+      demo: 'https://www.carlarreasanchez.com',
       techs: ['React', 'JavaScript', 'CSS', 'HTML'],
       translations: {
         es: {
-          title: 'Dynamic Counter',
+          title: 'Carla Larrea Sánchez',
           description:
-            'Dynamic Counter es una aplicación web simple que permite a los usuarios interactuar con un contador. El contador se puede incrementar o disminuir presionando las teclas + y - en el teclado. Además, el usuario puede presionar el botón Refresh para reiniciar el contador a cero. Hay un límite predefinido que el contador no puede exceder, proporcionando un rango controlado para la interacción.',
+            'Sitio web profesional desarrollado para Carla Larrea Sánchez, cineasta. Una página moderna y elegante que presenta su portafolio y trabajos cinematográficos.',
         },
         en: {
-          title: 'Dynamic Counter',
+          title: 'Carla Larrea Sánchez',
           description:
-            'Dynamic Counter is a simple web application that allows users to interact with a counter. The counter can be incremented or decremented by pressing the + and - keys on the keyboard. Additionally, the user can press the Refresh button to reset the counter to zero. There is a predefined limit that the counter cannot exceed, providing a controlled range for interaction.',
+            'Professional website developed for Carla Larrea Sánchez, filmmaker. A modern and elegant page showcasing her portfolio and cinematographic works.',
         },
       },
     },
