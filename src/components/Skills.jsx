@@ -17,8 +17,8 @@ const Skills = () => {
 
   // Lista de habilidades agrupadas por categoría
   const skillsData = {
-    frontend: {
-      title: { es: 'Frontend', en: 'Frontend' },
+    fullstack: {
+      title: { es: 'Full Stack', en: 'Full Stack' },
       skills: [
         { name: 'HTML/CSS', level: 'expert' },
         { name: 'JavaScript', level: 'advanced' },
